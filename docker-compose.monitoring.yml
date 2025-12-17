@@ -1,0 +1,28 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: sre-starter-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+    restart: unless-stopped
+  alertmanager:
+    image: prom/alertmanager
+    container_name: sre-starter-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--log.level=debug"
+
+  grafana:
+    image: grafana/grafana
+    container_name: sre-starter-grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
