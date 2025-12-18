@@ -1,5 +1,5 @@
 groups:
-  - name: sre-starter-alerts
+  - name: obs-alerts
     rules:
       - alert: High5xxErrorRate
         expr: |
