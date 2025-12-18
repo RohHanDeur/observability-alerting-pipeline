@@ -265,8 +265,9 @@ alertmanager.yml의 slack_configs api_url이 유효한지
 channel 이름/권한 문제인지
 
 Alertmanager logs에서 Notify success integration=slack가 찍히는지 확인
-
+```
 ## 8. 종료 / 정리 (Stop)
+```text
 docker compose -f docker-compose.monitoring.yml down
 
 
