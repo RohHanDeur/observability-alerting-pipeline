@@ -209,7 +209,7 @@ High5xxErrorRate
 ```
 ## 6.4 Alertmanager 로그에서 notify 성공 확인
 ```text
-docker logs -f observability-alerting-alertmanager | egrep -i 'notify|slack|webhook|error|warn|dispatch'
+docker logs -f observability-alertmanager | egrep -i 'notify|slack|webhook|error|warn|dispatch'
 
 
 예상 로그 예시:
