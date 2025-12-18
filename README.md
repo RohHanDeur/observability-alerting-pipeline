@@ -76,8 +76,12 @@ webhook_configs: FastAPI 엔드포인트(/alertmanager)로 알림
 ```
 ## 4. 시스템 기동 방법 (Start)
 ```text
-<!-- 핵심: - Prometheus는 FastAPI 앱(8000)이 있어야 scrape target이 UP이 됩니다. - FastAPI 앱을 먼저 띄우고 monitoring stack을 올리는 흐름이 가장 깔끔합니다. -->
+핵심:
+- Prometheus는 FastAPI 앱(8000)이 있어야 scrape target이 UP이 됩니다.
+- FastAPI 앱을 먼저 띄우고 monitoring stack을 올리는 흐름이 가장 깔끔합니다.
+```
 ## 4.1 (선택) FastAPI 앱이 이미 실행 중인지 확인
+```text
 curl -s http://127.0.0.1:8000/metrics | head
 
 
@@ -171,8 +175,15 @@ curl -s 'http://127.0.0.1:9090/api/v1/rules' | jq -r '
 ```
 ## 6. 알림 트리거(발생) 및 전달 확인
 ```text
-<!-- - High5xxErrorRate는 /fail로 요청을 계속 보내면 쉽게 firing 됩니다. - 알림이 firing 되면, 1) Prometheus에서 firing 확인 2) Alertmanager에서 alerts 확인 3) Alertmanager logs에서 notify success 확인 4) Slack / webhook 수신 확인 -->
-6.1 5xx 알림 트리거 (High5xxErrorRate)
+High5xxErrorRate는 /fail로 요청을 계속 보내면 쉽게 firing 됩니다.
+- 알림이 firing 되면
+1) Prometheus에서 firing 확인
+2) Alertmanager에서 alerts 확인
+3) Alertmanager logs에서 notify success 확인
+4) Slack / webhook 수신 확인
+```
+## 6.1 5xx 알림 트리거 (High5xxErrorRate)
+```text
 while true; do curl -s -o /dev/null http://127.0.0.1:8000/fail; sleep 0.2; done
 
 
