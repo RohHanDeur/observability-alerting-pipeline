@@ -15,7 +15,7 @@
 ---
 
 ## 1. Repository 구조
----
+
 <!--
 - 이 구조를 유지하면 문서의 모든 명령어가 그대로 동작합니다.
 - alertmanager.yml에 Slack Webhook이 비어있어도 시스템 구동/연결 검증은 가능하며,
