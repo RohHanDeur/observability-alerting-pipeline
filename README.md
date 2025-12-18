@@ -12,14 +12,11 @@
 ```
 ---
 ## 1. Repository 구조
-
-<!--
+```text
 - 이 구조를 유지하면 문서의 모든 명령어가 그대로 동작합니다.
 - alertmanager.yml에 Slack Webhook이 비어있어도 시스템 구동/연결 검증은 가능하며,
   Slack 실제 수신까지 보려면 webhook을 유효하게 넣어야 합니다.
--->
 
-```text
 observability-alerting-pipeline/
 ├── docker-compose.monitoring.yml
 └── monitoring/
@@ -113,8 +110,10 @@ Grafana: http://localhost:3000
 ```
 ## 5. 검증 단계 (Validation)
 ```text
-<!-- 검증은 "연결 검증 → 스크랩 검증 → 룰 로드 검증 → 알림 firing 검증 → receiver 전달 검증" 순서가 좋습니다. -->
+검증은 "연결 검증 → 스크랩 검증 → 룰 로드 검증 → 알림 firing 검증 → receiver 전달 검증" 순서가 좋습니다.
+```
 ## 5.1 컨테이너 상태 확인
+```text
 docker compose -f docker-compose.monitoring.yml ps
 docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' | egrep 'prometheus|alertmanager|grafana'
 ```
