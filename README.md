@@ -217,7 +217,7 @@ ALERTMANAGER_WEBHOOK: { ... }
 ```text
 <!-- 현업에서 제일 많이 터지는 포인트만 골라서 정리합니다. -->
 ```
-## 7.1 Prometheus 컨테이너가 계속 재시작한다
+## 7.1 Prometheus 컨테이너가 계속 재시작 시
 ```text
 prometheus.yml / alerts.yml YAML 문법 오류 가능
 
@@ -225,7 +225,7 @@ prometheus.yml / alerts.yml YAML 문법 오류 가능
 
 docker logs --tail=200 sre-starter-prometheus
 ```
-## 7.2 Alertmanager가 Prometheus에 안 잡힌다
+## 7.2 Alertmanager가 Prometheus에 확인 불가 한 경우
 ```text
 prometheus.yml의 alertmanagers targets가 올바른지 확인 (alertmanager:9093)
 
@@ -235,7 +235,7 @@ Prometheus API로 확인:
 
 curl -s http://127.0.0.1:9090/api/v1/alertmanagers
 ```
-## 7.3 Target이 DOWN이다
+## 7.3 Target이 DOWN인 경우
 ```text
 FastAPI 앱이 8000에서 실행 중인지 확인
 
@@ -247,7 +247,7 @@ macOS/Windows: 일반적으로 지원
 
 Linux: 별도 설정 필요할 수 있음 (예: host-gateway 사용)
 ```
-## 7.4 Slack 알림이 안 온다
+## 7.4 Slack 알림이 안오는 경우
 ```text
 alertmanager.yml의 slack_configs api_url이 유효한지
 
