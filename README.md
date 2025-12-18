@@ -33,7 +33,9 @@ observability-alerting-pipeline/
 ## 2. 사전 요구사항 (Prerequisites)
 
 ```text
--Docker Desktop (macOS/Windows) 또는 Docker Engine (Linux) - docker compose (Docker v2 이상) 추가(권장): - jq: Prometheus API 결과를 보기 좋게 출력
+- Docker Desktop (macOS/Windows) 또는 Docker Engine (Linux)
+- docker compose (Docker v2 이상) 추가(권장)
+- jq: Prometheus API 결과를 보기 좋게 출력
 macOS: brew install jq
 Ubuntu: sudo apt-get install -y jq
 ```
