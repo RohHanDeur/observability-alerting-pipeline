@@ -130,12 +130,12 @@ activeAlertmanagers에 값이 나오면 Prometheus가 Alertmanager를 인지한 
 
 추가로 컨테이너 내부에서 readiness 확인:
 
-docker exec -it observability-alerting-prometheus sh -lc 'wget -qO- http://alertmanager:9093/-/ready || true'
+docker exec -it obs-prometheus sh -lc 'wget -qO- http://alertmanager:9093/-/ready || true'
 
 
 정상: OK
 
-컨테이너명이 observability-alerting-prometheus가 아니라면 docker compose ps로 이름 확인 후 바꾸세요.
+컨테이너명이 obs-prometheus가 아니라면 docker compose ps로 이름 확인 후 바꾸세요.
 ```
 ## 5.3 Prometheus scrape target UP 확인
 ```text
@@ -234,7 +234,7 @@ prometheus.yml / alerts.yml YAML 문법 오류 가능
 
 컨테이너 로그 확인:
 
-docker logs --tail=200 observability-alerting-prometheus
+docker logs --tail=200 obs-prometheus
 ```
 ## 7.2 Alertmanager가 Prometheus에 확인 불가 한 경우
 ```text
