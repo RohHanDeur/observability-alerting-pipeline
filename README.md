@@ -34,20 +34,22 @@ observability-alerting-pipeline/
 
 ```text
 <!-- 필수: - Docker Desktop (macOS/Windows) 또는 Docker Engine (Linux) - docker compose (Docker v2 이상) 추가(권장): - jq: Prometheus API 결과를 보기 좋게 출력 - macOS: brew install jq - Ubuntu: sudo apt-get install -y jq -->
-
-2.1 버전 확인
+```
+## 2.1 버전 확인
+```text
 docker --version
 docker compose version
-
-3. 설정 파일 요약
+```
+## 3. 설정 파일 요약
+```text
 <!-- 각 파일의 역할을 "면접/리뷰 관점에서" 빠르게 설명할 수 있도록 요약합니다. -->
-
-3.1 docker-compose.monitoring.yml
-
+```
+## 3.1 docker-compose.monitoring.yml
+```text
 Prometheus(9090), Alertmanager(9093), Grafana(3000) 컨테이너 기동
 
 Prometheus는 ./monitoring/prometheus.yml, ./monitoring/alerts.yml를 컨테이너 내부로 마운트
-
+```
 3.2 monitoring/prometheus.yml
 
 scrape_interval: 5s로 빠르게 수집/알림 확인
