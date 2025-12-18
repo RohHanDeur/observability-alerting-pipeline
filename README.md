@@ -50,7 +50,7 @@ Prometheus(9090), Alertmanager(9093), Grafana(3000) 컨테이너 기동
 
 Prometheus는 ./monitoring/prometheus.yml, ./monitoring/alerts.yml를 컨테이너 내부로 마운트
 ```
-3.2 monitoring/prometheus.yml
+## 3.2 monitoring/prometheus.yml
 
 scrape_interval: 5s로 빠르게 수집/알림 확인
 
@@ -60,13 +60,13 @@ alerting.alertmanagers.targets로 Alertmanager 연결 (alertmanager:9093)
 
 scrape_configs로 FastAPI 앱의 metrics 수집 (host.docker.internal:8000/metrics)
 
-3.3 monitoring/alerts.yml
+## 3.3 monitoring/alerts.yml
 
 High5xxErrorRate: /fail handler의 5xx 비율이 1% 초과가 10초 지속되면 firing
 
 HighP95Latency: p95 > 200ms가 1분 지속되면 firing
 
-3.4 monitoring/alertmanager.yml
+## 3.4 monitoring/alertmanager.yml
 
 알림 그룹핑/반복 전송 정책(route)
 
@@ -76,9 +76,9 @@ slack_configs: Slack 채널로 알림
 
 webhook_configs: FastAPI 엔드포인트(/alertmanager)로 알림
 
-4. 시스템 기동 방법 (Start)
+## 4. 시스템 기동 방법 (Start)
 <!-- 핵심: - Prometheus는 FastAPI 앱(8000)이 있어야 scrape target이 UP이 됩니다. - FastAPI 앱을 먼저 띄우고 monitoring stack을 올리는 흐름이 가장 깔끔합니다. -->
-4.1 (선택) FastAPI 앱이 이미 실행 중인지 확인
+## 4.1 (선택) FastAPI 앱이 이미 실행 중인지 확인
 curl -s http://127.0.0.1:8000/metrics | head
 
 
@@ -86,7 +86,7 @@ curl -s http://127.0.0.1:8000/metrics | head
 
 응답이 없다면 FastAPI 앱을 먼저 실행하세요.
 
-4.2 Monitoring Stack 기동
+## 4.2 Monitoring Stack 기동
 cd observability-alerting-pipeline
 docker compose -f docker-compose.monitoring.yml up -d --force-recreate
 docker compose -f docker-compose.monitoring.yml ps
@@ -100,7 +100,7 @@ alertmanager: Up
 
 grafana: Up
 
-4.3 접속 URL
+## 4.3 접속 URL
 
 Prometheus: http://localhost:9090
 
@@ -108,13 +108,13 @@ Alertmanager: http://localhost:9093
 
 Grafana: http://localhost:3000
 
-5. 검증 단계 (Validation)
+## 5. 검증 단계 (Validation)
 <!-- 검증은 "연결 검증 → 스크랩 검증 → 룰 로드 검증 → 알림 firing 검증 → receiver 전달 검증" 순서가 좋습니다. -->
-5.1 컨테이너 상태 확인
+## 5.1 컨테이너 상태 확인
 docker compose -f docker-compose.monitoring.yml ps
 docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' | egrep 'prometheus|alertmanager|grafana'
 
-5.2 Prometheus → Alertmanager 연결 확인
+## 5.2 Prometheus → Alertmanager 연결 확인
 curl -s http://127.0.0.1:9090/api/v1/alertmanagers
 
 
@@ -129,7 +129,7 @@ docker exec -it sre-starter-prometheus sh -lc 'wget -qO- http://alertmanager:909
 
 컨테이너명이 sre-starter-prometheus가 아니라면 docker compose ps로 이름 확인 후 바꾸세요.
 
-5.3 Prometheus scrape target UP 확인
+## 5.3 Prometheus scrape target UP 확인
 
 Prometheus UI:
 
@@ -152,7 +152,7 @@ FastAPI 앱이 8000에서 떠 있는지
 
 macOS/Windows라면 host.docker.internal 접근이 되는지 확인
 
-5.4 Alert Rules 로드 확인
+## 5.4 Alert Rules 로드 확인
 
 Prometheus UI:
 
@@ -165,7 +165,7 @@ curl -s 'http://127.0.0.1:9090/api/v1/rules' | jq -r '
 | select(.type=="alerting")
 | "\(.name)\t\(.state)"'
 
-6. 알림 트리거(발생) 및 전달 확인
+## 6. 알림 트리거(발생) 및 전달 확인
 <!-- - High5xxErrorRate는 /fail로 요청을 계속 보내면 쉽게 firing 됩니다. - 알림이 firing 되면, 1) Prometheus에서 firing 확인 2) Alertmanager에서 alerts 확인 3) Alertmanager logs에서 notify success 확인 4) Slack / webhook 수신 확인 -->
 6.1 5xx 알림 트리거 (High5xxErrorRate)
 while true; do curl -s -o /dev/null http://127.0.0.1:8000/fail; sleep 0.2; done
@@ -173,7 +173,7 @@ while true; do curl -s -o /dev/null http://127.0.0.1:8000/fail; sleep 0.2; done
 
 중지: Ctrl + C
 
-6.2 Prometheus에서 firing 확인
+## 6.2 Prometheus에서 firing 확인
 curl -s http://127.0.0.1:9090/api/v1/alerts | jq -r '.data.alerts[] | "\(.labels.alertname)\t\(.state)"'
 
 
@@ -181,7 +181,7 @@ curl -s http://127.0.0.1:9090/api/v1/alerts | jq -r '.data.alerts[] | "\(.labels
 
 High5xxErrorRate firing
 
-6.3 Alertmanager에서 alerts 확인
+## 6.3 Alertmanager에서 alerts 확인
 curl -s http://127.0.0.1:9093/api/v2/alerts | jq -r '.[].labels.alertname'
 
 
@@ -189,7 +189,7 @@ curl -s http://127.0.0.1:9093/api/v2/alerts | jq -r '.[].labels.alertname'
 
 High5xxErrorRate
 
-6.4 Alertmanager 로그에서 notify 성공 확인
+## 6.4 Alertmanager 로그에서 notify 성공 확인
 docker logs -f sre-starter-alertmanager | egrep -i 'notify|slack|webhook|error|warn|dispatch'
 
 
@@ -199,15 +199,15 @@ Notify success ... integration=webhook[0]
 
 (Slack 설정이 유효하면) Notify success ... integration=slack[0]
 
-6.5 Webhook(FastAPI) 수신 확인
+## 6.5 Webhook(FastAPI) 수신 확인
 
 FastAPI 쪽 로그에서 아래처럼 들어오면 정상:
 
 ALERTMANAGER_WEBHOOK: { ... }
 
-7. 트러블슈팅 체크리스트
+## 7. 트러블슈팅 체크리스트
 <!-- 현업에서 제일 많이 터지는 포인트만 골라서 정리합니다. -->
-7.1 Prometheus 컨테이너가 계속 재시작한다
+## 7.1 Prometheus 컨테이너가 계속 재시작한다
 
 prometheus.yml / alerts.yml YAML 문법 오류 가능
 
@@ -215,7 +215,7 @@ prometheus.yml / alerts.yml YAML 문법 오류 가능
 
 docker logs --tail=200 sre-starter-prometheus
 
-7.2 Alertmanager가 Prometheus에 안 잡힌다
+## 7.2 Alertmanager가 Prometheus에 안 잡힌다
 
 prometheus.yml의 alertmanagers targets가 올바른지 확인 (alertmanager:9093)
 
@@ -225,7 +225,7 @@ Prometheus API로 확인:
 
 curl -s http://127.0.0.1:9090/api/v1/alertmanagers
 
-7.3 Target이 DOWN이다
+## 7.3 Target이 DOWN이다
 
 FastAPI 앱이 8000에서 실행 중인지 확인
 
@@ -237,7 +237,7 @@ macOS/Windows: 일반적으로 지원
 
 Linux: 별도 설정 필요할 수 있음 (예: host-gateway 사용)
 
-7.4 Slack 알림이 안 온다
+## 7.4 Slack 알림이 안 온다
 
 alertmanager.yml의 slack_configs api_url이 유효한지
 
@@ -245,7 +245,7 @@ channel 이름/권한 문제인지
 
 Alertmanager logs에서 Notify success integration=slack가 찍히는지 확인
 
-8. 종료 / 정리 (Stop)
+## 8. 종료 / 정리 (Stop)
 docker compose -f docker-compose.monitoring.yml down
 
 
