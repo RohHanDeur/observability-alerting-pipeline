@@ -1,6 +1,5 @@
 # Observability Alerting Pipeline (Prometheus → Alertmanager → Slack/Webhook, Grafana)
 ```text
-<!--
 [목적]
 - 로컬 환경에서 Prometheus 규칙(alert rules) 기반 알림을 생성하고,
   Alertmanager를 통해 Slack 및 Webhook(FastAPI)으로 전달되는 end-to-end 파이프라인을 구성한 프로젝트.
@@ -10,10 +9,8 @@
 - Prometheus: Metrics 수집 + Alert Rules 평가
 - Alertmanager: Alert 라우팅/그룹핑/중복제거 + Receiver(Slack/Webhook)로 전달
 - Grafana: Metrics 시각화 (대시보드 직접 구성/임포트는 선택)
--->
 ```
 ---
-
 ## 1. Repository 구조
 
 <!--
