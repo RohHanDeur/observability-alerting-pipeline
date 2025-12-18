@@ -29,7 +29,7 @@ observability-alerting-pipeline/
     ├── prometheus.yml
     ├── alerts.yml
     └── alertmanager.yml
-
+```
 ## 2. 사전 요구사항 (Prerequisites)
 
 ```text
